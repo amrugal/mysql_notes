@@ -1,0 +1,11 @@
+# mysql - gender check
+alter table pracownicy add constraint check (regexp_like(BINARY plec, 'K|M')); # BINARY must be used for casesensitive support, regexp does not support case sensitiv regular expessions (thats what I found on web)
+
+# mysql - series of digits check
+alter table pracownicy add constraint chk_pesel check (regexp_like(pesel, '[0-9]{11}')); # [0-9] check for digits from 0 to 9, {11} repeat digit 11 times
+
+# mysql - command for checking constraints
+show create table pracownicy\G;
+
+# mysql - inserting data into table
+insert into pracownicy (id, imie, nazwisko, pesel, plec, data_urodzenia, pensja) values (null , 'Jan', 'Kowalski', '12345678901', 'M', '1980-05-20', 3000);
