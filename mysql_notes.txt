@@ -9,3 +9,7 @@ show create table pracownicy\G;
 
 # mysql - inserting data into table
 insert into pracownicy (id, imie, nazwisko, pesel, plec, data_urodzenia, pensja) values (null , 'Jan', 'Kowalski', '12345678901', 'M', '1980-05-20', 3000);
+
+#mysql - remove primary key
+alter table pracownicy modify id int not null; # auto_increment must be removed first and then:
+alter table pracownicy drop primary key;
