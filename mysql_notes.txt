@@ -13,3 +13,12 @@ insert into pracownicy (id, imie, nazwisko, pesel, plec, data_urodzenia, pensja)
 #mysql - remove primary key
 alter table pracownicy modify id int not null; # auto_increment must be removed first and then:
 alter table pracownicy drop primary key;
+
+# mysql - add not null, auto_increment and primary key
+alter table pracownicy modify id int not null auto_increment primary key;
+
+# mysql - rename column
+alter table departamenty change column id_departamentu kod_departamentu int;
+
+# mysql - add foreign key
+alter table departamenty add foreign key (id_kierownika) references pracownicy(id);
