@@ -1,8 +1,21 @@
-# mysql - gender check
-alter table pracownicy add constraint check (regexp_like(BINARY plec, 'K|M')); # BINARY must be used for casesensitive support, regexp does not support case sensitiv regular expessions (thats what I found on web)
+# mysql - gender check: 
+alter table pracownicy add constraint chk_gender check (regexp_like(BINARY plec, 'K|M')); 
+# BINARY must be used for casesensitive support, regexp does not support case sensitiv regular expessions (thats what I found on web)
+
+other check example without regex: 
+
+alter table typy_produktow add constraint chk_termin check (okres_waznosci in (BINARY 'K', 'D'));
+
+# mysql - applying check on column during table creation:
+create table typy_produktow (
+                             -> typ_produktu varchar(20) primary key,
+                             -> nazwa_pelna varchar(40) not null,
+                             -> rabat int,
+                             -> okres_waznosci varchar(1) check (BINARY okres_waznosci in ('K','D')));
 
 # mysql - series of digits check
-alter table pracownicy add constraint chk_pesel check (regexp_like(pesel, '[0-9]{11}')); # [0-9] check for digits from 0 to 9, {11} repeat digit 11 times
+alter table pracownicy add constraint chk_pesel check (regexp_like(pesel, '[0-9]{11}')); 
+# [0-9] check for digits from 0 to 9, {11} repeat digit 11 times
 
 # mysql - command for checking constraints
 show create table pracownicy\G;
@@ -22,3 +35,14 @@ alter table departamenty change column id_departamentu kod_departamentu int;
 
 # mysql - add foreign key
 alter table departamenty add foreign key (id_kierownika) references pracownicy(id);
+# (3780, "Referencing column 'typ_produktu' and referenced column 'typ_produktu' in foreign key constraint 'produkty_ibfk_1' are incompatible.")
+# error occurs when engines or charset, collate does not match
+# use 'show create table typy_produktow\G;' command to check engine and charset, collate
+
+#mysql - remove key index from column
+show index from produkty\G;
+alter table produkty drop index typ_produktu;
+# instead of deleting foreign key I deleted auto generated foreign key constraint and after deleting foreign key in next step, key index remained
+
+# mysql - change charset and collate for column
+alter table typy_produktow convert to character set utf8 collate utf8_polish_ci;
