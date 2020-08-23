@@ -39,10 +39,24 @@ alter table departamenty add foreign key (id_kierownika) references pracownicy(i
 # error occurs when engines or charset, collate does not match
 # use 'show create table typy_produktow\G;' command to check engine and charset, collate
 
-#mysql - remove key index from column
+# mysql - remove key index from column
 show index from produkty\G;
 alter table produkty drop index typ_produktu;
 # instead of deleting foreign key I deleted auto generated foreign key constraint and after deleting foreign key in next step, key index remained
 
 # mysql - change charset and collate for column
 alter table typy_produktow convert to character set utf8 collate utf8_polish_ci;
+
+# mysql round function
+select nazwa_produktu, cena_zakupu, cena_sprzedazy, round(cena_sprzedazy*(1+stawka_podatku/100),2) as cena_sprzedazy_brutto, stawka_podatku from produkty;
+
+# mysql ceil function (how to round up selling prize)
+select nazwa_produktu, cena_zakupu, cena_sprzedazy, ceil(cena_sprzedazy*(1+stawka_podatku/100)*100)/100 as cena_sprzedazy_brutto, stawka_podatku from produkty;
+# solution with round
+round(4.204, 2)  = 4.20
+# solution with ceil
+4.204 * 100 = 420,4
+ceil(420.4) = 421
+421/100 = 4.21
+
+#
