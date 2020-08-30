@@ -6,6 +6,9 @@ other check example without regex:
 
 alter table typy_produktow add constraint chk_termin check (okres_waznosci in (BINARY 'K', 'D'));
 
+# mysql - remove constraint
+alter table pracownicy drop constraint pracownicy_ibfk_2;
+
 # mysql - applying check on column during table creation:
 create table typy_produktow (
                              -> typ_produktu varchar(20) primary key,
@@ -59,4 +62,6 @@ round(4.204, 2)  = 4.20
 ceil(420.4) = 421
 421/100 = 4.21
 
-#
+# add column to table
+alter table pracownicy add column kod_departamentu int;
+
