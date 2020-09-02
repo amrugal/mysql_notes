@@ -50,10 +50,10 @@ alter table produkty drop index typ_produktu;
 # mysql - change charset and collate for column
 alter table typy_produktow convert to character set utf8 collate utf8_polish_ci;
 
-# mysql round function
+# mysql - round function
 select nazwa_produktu, cena_zakupu, cena_sprzedazy, round(cena_sprzedazy*(1+stawka_podatku/100),2) as cena_sprzedazy_brutto, stawka_podatku from produkty;
 
-# mysql ceil function (how to round up selling prize)
+# mysql - ceil function (how to round up selling prize)
 select nazwa_produktu, cena_zakupu, cena_sprzedazy, ceil(cena_sprzedazy*(1+stawka_podatku/100)*100)/100 as cena_sprzedazy_brutto, stawka_podatku from produkty;
 # solution with round
 round(4.204, 2)  = 4.20
@@ -62,6 +62,8 @@ round(4.204, 2)  = 4.20
 ceil(420.4) = 421
 421/100 = 4.21
 
-# add column to table
+# mysql - add column to table
 alter table pracownicy add column kod_departamentu int;
 
+# mysql - delete table
+drop table tablename;
