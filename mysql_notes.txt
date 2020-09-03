@@ -42,6 +42,18 @@ alter table departamenty add foreign key (id_kierownika) references pracownicy(i
 # error occurs when engines or charset, collate does not match
 # use 'show create table typy_produktow\G;' command to check engine and charset, collate
 
+# mysql - change database collation:
+
+ALTER DATABASE <database_name> CHARACTER SET utf8 COLLATE utf8_polish_ci;
+
+change table collation:
+
+ALTER TABLE <table_name> CONVERT TO CHARACTER SET utf8 COLLATE utf8_polish_ci;
+
+change column collation:
+
+ALTER TABLE <table_name> MODIFY <column_name> VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_polish_ci;
+
 # mysql - add foreign key during table creation
 Create table faktury_sprzedazy
 (
