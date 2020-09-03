@@ -42,6 +42,22 @@ alter table departamenty add foreign key (id_kierownika) references pracownicy(i
 # error occurs when engines or charset, collate does not match
 # use 'show create table typy_produktow\G;' command to check engine and charset, collate
 
+# mysql - add foreign key during table creation
+Create table faktury_sprzedazy
+(
+id_faktury int primary key,
+data_faktury date,
+id_klienta int,
+foreign key id_klienta references klienci(id),
+wartosc_netto decimal(9,2),
+wartosc_brutto decimal(9,2),
+stawka_podatku int,
+waluta varchar(4)
+);
+
+insert into faktury_sprzedazy (id_faktury, data_faktury, id_klienta, wartosc_netto, wartosc_brutto, stawka_podatku, waluta)
+values (1, '2018-11-25', 5, 25, 30.75, 23, 'PLN');
+
 # mysql - remove key index from column
 show index from produkty\G;
 alter table produkty drop index typ_produktu;
