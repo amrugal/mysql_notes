@@ -55,8 +55,47 @@ stawka_podatku int,
 waluta varchar(4)
 );
 
-insert into faktury_sprzedazy (id_faktury, data_faktury, id_klienta, wartosc_netto, wartosc_brutto, stawka_podatku, waluta)
-values (1, '2018-11-25', 5, 25, 30.75, 23, 'PLN');
+
+# mysql - temporarily disable a foreign key constraint
+SET FOREIGN_KEY_CHECKS=0;
+
+then, after done...
+
+SET FOREIGN_KEY_CHECKS=1;
+
+or
+
+ALTER TABLE table_name DISABLE KEYS;
+
+then...
+
+ALTER TABLE table_name ENABLE KEYS;
+
+-- DISABLE KEYS does not work on InnoDB engine! Works for MyISAM.
+
+also we can set...
+
+ON DELETE SET NULL
+
+to avoid turning key checking on and off, we can permanently set ON DELETE SET NULL:
+
+delete the current foreign key first...
+
+ALTER TABLE table_name1 DROP FOREIGN KEY fk_name1; 
+ALTER TABLE table_name2 DROP FOREIGN KEY fk_name2;
+
+Then add the foreign key constraints back
+
+ALTER TABLE table_name1 
+  ADD FOREIGN KEY (table2_id) 
+        REFERENCES table2(id)
+        ON DELETE SET NULL;
+
+ALTER TABLE tablename2 
+  ADD FOREIGN KEY (table1_id) 
+        REFERENCES table1(id)
+        ON DELETE SET NULL;
+
 
 # mysql - remove key index from column
 show index from produkty\G;
